@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,15 @@ export default function Index() {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupEmail, setPopupEmail] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '');
@@ -45,7 +54,9 @@ export default function Index() {
             </div>
             <div className="hidden md:flex items-center gap-8">
               <button onClick={() => scrollToSection('hero')} className="text-sm font-medium hover:text-primary transition-colors">Главная</button>
+              <button onClick={() => scrollToSection('about')} className="text-sm font-medium hover:text-primary transition-colors">О нас</button>
               <button onClick={() => scrollToSection('directions')} className="text-sm font-medium hover:text-primary transition-colors">Направления</button>
+              <button onClick={() => scrollToSection('schedule')} className="text-sm font-medium hover:text-primary transition-colors">Расписание</button>
               <button onClick={() => scrollToSection('prices')} className="text-sm font-medium hover:text-primary transition-colors">Цены</button>
               <button onClick={() => scrollToSection('reviews')} className="text-sm font-medium hover:text-primary transition-colors">Отзывы</button>
               <button onClick={() => scrollToSection('contact')} className="text-sm font-medium hover:text-primary transition-colors">Контакты</button>
@@ -102,6 +113,64 @@ export default function Index() {
         </div>
       </section>
 
+      <section id="about" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <img 
+                src="https://cdn.poehali.dev/projects/abb55560-96c1-4e1e-ba8d-e50acc0783ff/files/76ee48f3-1006-41a6-a4c9-0c1aaa8b0bdf.jpg" 
+                alt="Групповые тренировки"
+                className="rounded-3xl shadow-2xl w-full h-[500px] object-cover"
+              />
+              <div className="absolute -bottom-8 -right-8 bg-primary text-white p-8 rounded-2xl shadow-2xl max-w-xs">
+                <div className="text-4xl font-bold mb-2">5 лет</div>
+                <div className="text-sm">создаём лучшие условия для ваших тренировок</div>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <Badge className="bg-primary/10 text-primary border-primary">Наша философия</Badge>
+              <h2 className="text-4xl md:text-5xl font-bold">Фитнес, который меняет жизнь</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                ФитЛайф — это не просто фитнес-клуб. Это пространство, где каждый находит свой путь к здоровью и уверенности в себе.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Мы создали систему, которая работает для людей с любым уровнем подготовки. Наши тренеры — сертифицированные профессионалы с опытом работы от 5 лет, которые знают, как достичь результата безопасно и эффективно.
+              </p>
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-orange-500 flex items-center justify-center">
+                    <Icon name="Target" size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Персональный подход</h3>
+                  <p className="text-sm text-muted-foreground">Программа под ваши цели и возможности</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-cyan-500 flex items-center justify-center">
+                    <Icon name="Shield" size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Безопасность</h3>
+                  <p className="text-sm text-muted-foreground">Техника выполнения под контролем</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Icon name="Users" size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Комьюнити</h3>
+                  <p className="text-sm text-muted-foreground">Поддержка единомышленников</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+                    <Icon name="TrendingUp" size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Результат</h3>
+                  <p className="text-sm text-muted-foreground">Видимые изменения за 3 месяца</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="directions" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-16 space-y-4">
@@ -131,6 +200,78 @@ export default function Index() {
                 </CardHeader>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="schedule" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <Badge className="bg-secondary/10 text-secondary-foreground border-secondary">Расписание тренировок</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold">Выбери удобное время</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Занятия проходят ежедневно с 7:00 до 23:00. Записывайся на групповые и персональные тренировки
+            </p>
+          </div>
+          <div className="grid md:grid-cols-7 gap-4 mb-8">
+            {['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'].map((day, idx) => (
+              <button
+                key={idx}
+                className={`p-4 rounded-xl font-semibold transition-all ${
+                  idx === 0 
+                    ? 'bg-primary text-white shadow-lg' 
+                    : 'bg-card border-2 hover:border-primary hover:bg-primary/5'
+                }`}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { time: '08:00 - 09:00', title: 'Йога для начинающих', trainer: 'Анна Смирнова', spots: 5, color: 'from-green-500 to-emerald-500' },
+              { time: '09:30 - 10:30', title: 'Силовая тренировка', trainer: 'Дмитрий Волков', spots: 3, color: 'from-red-500 to-orange-500' },
+              { time: '11:00 - 12:00', title: 'Пилатес', trainer: 'Елена Петрова', spots: 8, color: 'from-purple-500 to-pink-500' },
+              { time: '18:00 - 19:00', title: 'HIIT тренировка', trainer: 'Игорь Соколов', spots: 2, color: 'from-yellow-500 to-orange-500' },
+              { time: '19:30 - 20:30', title: 'Функциональный тренинг', trainer: 'Максим Кузнецов', spots: 6, color: 'from-blue-500 to-cyan-500' },
+              { time: '21:00 - 22:00', title: 'Растяжка и релакс', trainer: 'Мария Лебедева', spots: 10, color: 'from-pink-500 to-rose-500' },
+            ].map((session, idx) => (
+              <Card key={idx} className="hover:shadow-lg transition-all group cursor-pointer border-2 hover:border-primary">
+                <CardHeader>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${session.color} flex items-center justify-center`}>
+                      <Icon name="Clock" size={20} className="text-white" />
+                    </div>
+                    <Badge variant={session.spots <= 3 ? 'destructive' : 'secondary'} className="text-xs">
+                      {session.spots} мест
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-lg group-hover:text-primary transition-colors">{session.title}</CardTitle>
+                  <CardDescription className="space-y-1">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Icon name="Clock" size={14} />
+                      <span>{session.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Icon name="User" size={14} />
+                      <span>{session.trainer}</span>
+                    </div>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button className="w-full" variant="outline" onClick={() => scrollToSection('contact')}>
+                    Записаться
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">Не нашли подходящее время?</p>
+            <Button size="lg" variant="outline" onClick={() => scrollToSection('contact')}>
+              <Icon name="Calendar" size={20} className="mr-2" />
+              Индивидуальное расписание
+            </Button>
           </div>
         </div>
       </section>
@@ -371,6 +512,51 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <Card className="max-w-md w-full relative animate-scale-in">
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-muted flex items-center justify-center transition-colors"
+            >
+              <Icon name="X" size={20} />
+            </button>
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary mx-auto mb-4 flex items-center justify-center">
+                <Icon name="Gift" size={32} className="text-white" />
+              </div>
+              <CardTitle className="text-2xl mb-2">Получи скидку 20%</CardTitle>
+              <CardDescription className="text-base">
+                Оставь email и получи промокод на первый абонемент
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Input
+                type="email"
+                placeholder="email@example.com"
+                value={popupEmail}
+                onChange={(e) => setPopupEmail(e.target.value)}
+                className="h-12"
+              />
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => {
+                  alert('Промокод FITLIFE20 отправлен на ' + popupEmail);
+                  setShowPopup(false);
+                }}
+              >
+                Получить промокод
+                <Icon name="ArrowRight" size={20} className="ml-2" />
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
